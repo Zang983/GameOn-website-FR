@@ -71,21 +71,25 @@ function resetErrorMessage() {
 function checkForm() {
   let lastname = subscribeForm.querySelector("#lastname")
   let firstname = subscribeForm.querySelector("#firstname")
+  let nameRegex = new RegExp(/[0-9^\&\~\#\(\)\@\]\[\|\$\µ\!\§\;\\\/]/)
   let email = subscribeForm.querySelector("#email")
   let regexEmail = new RegExp(/[0-9^\&\~\#\(\)\@\]\[\|\$\µ\!\§\;\\\/]/)
   let birthdate = subscribeForm.querySelector("#birthdate")
+  let date = new Date()
+  console.log(date)
+  console.log(new Date(birthdate.value))
   let quantity = subscribeForm.querySelector("#quantity")
   let quantityValue = parseInt(quantity.value, 10)
   let cgu = subscribeForm.querySelector("#checkbox1")
   validity = true
 
   /* Check lastname & firstname*/
-  if (firstname.value.length < 2 || firstname.value === null) {
-    displayErrorMessage("Votre prénom doit avoir plus de deux caractères", firstname.parentNode)
+  if (firstname.value.length < 2 || firstname.value === null || nameRegex.test(firstname.value)) {
+    displayErrorMessage("Votre prénom doit avoir plus de deux caractères et ne pas contenir de chiffre", firstname.parentNode)
     validity = false
   }
-  if (lastname.value.length < 2 || lastname.value === null) {
-    displayErrorMessage("Votre nom doit avoir plus de deux caractères", lastname.parentNode)
+  if (lastname.value.length < 2 || lastname.value === null || nameRegex.test(lastname.value)) {
+    displayErrorMessage("Votre prénom doit avoir plus de deux caractères et ne pas contenir de chiffre", lastname.parentNode)
     validity = false
   }
   /* Test email with regex*/
@@ -93,8 +97,14 @@ function checkForm() {
     displayErrorMessage("Vérifier la validité de votre adresse e-mail", email.parentNode)
     validity = false
   }
-  if (birthdate.value === "") {
-    displayErrorMessage("Vous devez saisir votre date de naissance", birthdate.parentNode)
+  if (birthdate.value === "" || new Date(birthdate.value) > new Date()) {
+    if(birthdate.value != ""){
+      displayErrorMessage("Vous devez être né pour participer !", birthdate.parentNode)
+    }
+    else{
+      displayErrorMessage("Vous devez saisir votre date de naissance", birthdate.parentNode)
+    }
+
     validity = false
   }
   /* Check quantity */
