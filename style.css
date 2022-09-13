@@ -43,7 +43,7 @@ img {
 }*/
 @media screen and (max-width: 1109px) and (min-width : 769px) {
   .main-navbar {
-    width:100%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -71,8 +71,9 @@ img {
   font-size: 20px;
   font-family: Roboto, sans-serif;
 }
-@media screen and (max-width: 1109px) and (min-width : 769px){
-  .topnav a{
+
+@media screen and (max-width: 1109px) and (min-width : 769px) {
+  .topnav a {
     padding: 12px 4px;
   }
 }
@@ -128,11 +129,13 @@ img {
   .topnav a {
     display: none;
   }
-  .main-navbar a{
-    font-size:1rem;
+
+  .main-navbar a {
+    font-size: 1rem;
   }
-  .header-logo img{
-    width:45vw;
+
+  .header-logo img {
+    width: 45vw;
   }
 
   .topnav a.icon {
@@ -228,7 +231,7 @@ main {
 
 label {
   font-family: var(--font-default);
-  font-size: 17px;
+  font-size: 0.875rem;
   font-weight: normal;
   display: inline-block;
   margin-bottom: 11px;
@@ -456,7 +459,9 @@ input {
 /* custom select end */
 .text-label {
   font-weight: normal;
-  font-size: 16px;
+  padding: 2px 0;
+  font-size: 14px;
+
 }
 
 .hero-section {
@@ -469,19 +474,20 @@ input {
 }
 
 .hero-content {
-  width:100%;
+  width: 100%;
   padding: 51px 67px;
   grid-column: span 4;
   background: #232323;
   color: #fff;
   position: relative;
   text-align: left;
-  }
+}
+
 @media screen and (max-width:768px) {
-  .hero-content{
-    background:none;
+  .hero-content {
+    background: none;
   }
-  
+
 }
 
 .hero-content::after {
@@ -504,10 +510,18 @@ input {
   font-weight: normal;
   white-space: nowrap;
 }
+
 @media screen and (max-width:1024px) {
-  .hero-headline{
-font-size:6vw;
+  .hero-headline {
+    text-align: center;
+    font-size: 10vw;
+    font-weight:bold;
   }
+}
+
+.header-logo{
+  display:flex;
+  align-items: center;
 }
 
 .hero-text {
@@ -572,14 +586,16 @@ footer {
   .hero-section {
     display: block;
     box-shadow: unset;
-    width:100%;
+    width: 100%;
   }
-  .hero-content *{
-    max-width:100%;
+
+  .hero-content * {
+    max-width: 100%;
   }
+
   .hero-content {
     color: #000;
-    padding: 20px; 
+    padding: 20px;
   }
 
   .hero-content::after {
@@ -591,12 +607,10 @@ footer {
   }
 
   .hero-headline {
-    font-size: 4.5rem;
     white-space: normal;
   }
 
   .hero-text {
-  
     font-size: 1.5rem;
   }
 
@@ -616,6 +630,7 @@ footer {
     text-align: center;
   }
 }
+
 @keyframes modalopen {
   from {
     opacity: 0;
