@@ -89,7 +89,7 @@ function checkForm() {
     validity = false
   }
   if (lastname.value.length < 2 || lastname.value === null || nameRegex.test(lastname.value)) {
-    displayErrorMessage("Votre prénom doit avoir plus de deux caractères et ne pas contenir de chiffre", lastname.parentNode)
+    displayErrorMessage("Votre nom doit avoir plus de deux caractères et ne pas contenir de chiffre", lastname.parentNode)
     validity = false
   }
   /* Test email with regex*/
