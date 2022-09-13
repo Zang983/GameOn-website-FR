@@ -8,6 +8,7 @@ const closeBtn = document.querySelector(".close");
 const submitBtn = document.querySelector(".btn-submit")
 // Form Element for validity Check
 const subscribeForm = document.forms[0]
+let formValidate = false;
 
 
 
@@ -48,25 +49,21 @@ function checkLocationChecked(arrayLocation) {
 /**
  * Function to display an error's message for each false block
  * @param {string} message 
- * @param {HTMLElement} parentNode 
+ * @param {HTMLElement} parent 
  */
-function displayErrorMessage(message, parentNode) {
-  if (!parentNode.querySelector(".errorMessage")) {
-    let errorMessage = document.createElement("p")
-    errorMessage.setAttribute("class", "errorMessage")
-    errorMessage.innerText = message;
-    parentNode.appendChild(errorMessage)
-  }
+function displayErrorMessage(message, parent) {
+  parent.setAttribute("data-error",message)
+  parent.setAttribute("data-error-visible","true")
+
 }
 /*
 At each submit form reset alert message
 */
-function resetErrorMessage(){
-    for (let erreur of subscribeForm.querySelectorAll(".errorMessage")) {
-      erreur.parentNode.removeChild(erreur)
-    }
+function resetErrorMessage() {
+  for (let field of subscribeForm.querySelectorAll(".formData")) {
+    field.removeAttribute("data-error-visible")
+  }
 }
-
 /**
  * Check each field of inscription form
  * @returns {boolean}
@@ -115,26 +112,65 @@ function checkForm() {
     displayErrorMessage("Vous devez accepter les CGU pour vous inscrire.", subscribeForm.querySelector("#checkbox1").parentNode)
     validity = false
   }
-
   return validity;
+}
+/**
+ * Delete confirm message when user close modal after a valid submit
+ */
+function deleteConfirmDisplay() {
+  let confirmBtn = document.querySelector(".btn-confirm")
+  let confirmMessage = document.querySelector(".confirmMessage")
+  document.querySelector(".modal-body").removeChild(confirmBtn);
+  document.querySelector(".modal-body").removeChild(confirmMessage);
+}
+
+/**
+ * Confirm inscription
+ */
+function displayConfirm() {
+  let body = document.querySelector(".modal-body");
+  document.querySelector("form").style.display = "none";
+  let confirmMessage = document.createElement("p");
+  confirmMessage.setAttribute("class", "confirmMessage");
+  confirmMessage.innerText = "Merci pour votre inscription";
+  let newBtn = document.createElement("button");
+  newBtn.setAttribute("class", "btn-confirm");
+  newBtn.innerText = "Fermer";
+  body.appendChild(confirmMessage);
+  body.appendChild(newBtn);
+  newBtn.addEventListener("click", () => {
+    deleteConfirmDisplay();
+    resetForm();
+  })
+}
+function resetForm() {
+  let form = document.querySelector("form")
+  form.style.display = "block";
+  form.reset();
+  toggleModal();
 }
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", () => toggleModal()))
 // close modal event
-closeBtn.addEventListener("click", () => toggleModal());
-
-submitBtn.addEventListener("click", event => {
-
-
-  /* Check form before submit*/
-  if (!checkForm()) {
-    event.preventDefault();
+closeBtn.addEventListener("click", () => {
+  if (formValidate) {
+    deleteConfirmDisplay();
+    resetForm()
+    formValidate = false
   }
   else {
-    alert("Votre inscription est bien prise en compte.")
+    toggleModal()
   }
 
+});
 
+submitBtn.addEventListener("click", event => {
+  resetErrorMessage() 
+  event.preventDefault();
+  if (checkForm()) {
+    formValidate = true;
+    displayConfirm();
+  }
 })
 
