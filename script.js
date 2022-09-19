@@ -1,5 +1,4 @@
 let modalVisibility = false;
-
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
@@ -10,8 +9,7 @@ const submitBtn = document.querySelector(".btn-submit")
 const subscribeForm = document.forms[0]
 let formValidate = false;
 
-
-
+document.querySelector(".icon").addEventListener("click", () => editNav())
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -20,7 +18,6 @@ function editNav() {
     x.className = "topnav";
   }
 }
-
 /**
  * Toggle the visibility of modal form
  */
@@ -52,8 +49,8 @@ function checkLocationChecked(arrayLocation) {
  * @param {HTMLElement} parent 
  */
 function displayErrorMessage(message, parent) {
-  parent.setAttribute("data-error",message)
-  parent.setAttribute("data-error-visible","true")
+  parent.setAttribute("data-error", message)
+  parent.setAttribute("data-error-visible", "true")
 
 }
 /*
@@ -73,35 +70,32 @@ function checkForm() {
   let firstname = subscribeForm.querySelector("#firstname")
   let nameRegex = new RegExp(/[0-9^\&\~\#\(\)\@\]\[\|\$\µ\!\§\;\\\/]/)
   let email = subscribeForm.querySelector("#email")
-  let regexEmail = new RegExp(/[0-9^\&\~\#\(\)\@\]\[\|\$\µ\!\§\;\\\/]/)
+  let regexEmail = new RegExp(/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,15}$/)
   let birthdate = subscribeForm.querySelector("#birthdate")
-  let date = new Date()
-  console.log(date)
-  console.log(new Date(birthdate.value))
   let quantity = subscribeForm.querySelector("#quantity")
   let quantityValue = parseInt(quantity.value, 10)
   let cgu = subscribeForm.querySelector("#checkbox1")
   validity = true
 
   /* Check lastname & firstname*/
-  if (firstname.value.length < 2 || firstname.value === null || nameRegex.test(firstname.value)) {
+  if (firstname.value.length < 2 || firstname.value === null || nameRegex.test(firstname.value.trim())) {
     displayErrorMessage("Votre prénom doit avoir plus de deux caractères et ne pas contenir de chiffre", firstname.parentNode)
     validity = false
   }
-  if (lastname.value.length < 2 || lastname.value === null || nameRegex.test(lastname.value)) {
+  if (lastname.value.length < 2 || lastname.value === null || nameRegex.test(lastname.value.trim())) {
     displayErrorMessage("Votre nom doit avoir plus de deux caractères et ne pas contenir de chiffre", lastname.parentNode)
     validity = false
   }
   /* Test email with regex*/
-  if (!regexEmail.test(email.value)) {
+  if (!regexEmail.test(email.value.trim())) {
     displayErrorMessage("Vérifier la validité de votre adresse e-mail", email.parentNode)
     validity = false
   }
   if (birthdate.value === "" || new Date(birthdate.value) > new Date()) {
-    if(birthdate.value != ""){
+    if (birthdate.value != "") {
       displayErrorMessage("Vous devez être né pour participer !", birthdate.parentNode)
     }
-    else{
+    else {
       displayErrorMessage("Vous devez saisir votre date de naissance", birthdate.parentNode)
     }
 
@@ -130,12 +124,15 @@ function checkForm() {
 function deleteConfirmDisplay() {
   let confirmBtn = document.querySelector(".btn-confirm")
   let confirmMessage = document.querySelector(".confirmMessage")
-  document.querySelector(".modal-body").removeChild(confirmBtn);
-  document.querySelector(".modal-body").removeChild(confirmMessage);
-}
+  formValidate = false
+  if (confirmBtn != null && confirmMessage != null) {
+    document.querySelector(".modal-body").removeChild(confirmBtn);
+    document.querySelector(".modal-body").removeChild(confirmMessage);
+  }
 
+}
 /**
- * Confirm inscription
+ * Confirm signup
  */
 function displayConfirm() {
   let body = document.querySelector(".modal-body");
@@ -167,7 +164,6 @@ closeBtn.addEventListener("click", () => {
   if (formValidate) {
     deleteConfirmDisplay();
     resetForm()
-    formValidate = false
   }
   else {
     toggleModal()
@@ -176,7 +172,7 @@ closeBtn.addEventListener("click", () => {
 });
 
 submitBtn.addEventListener("click", event => {
-  resetErrorMessage() 
+  resetErrorMessage()
   event.preventDefault();
   if (checkForm()) {
     formValidate = true;
